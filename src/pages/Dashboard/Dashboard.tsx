@@ -14,6 +14,7 @@ interface Repository {
     login: string;
     avatar_url: string;
   };
+  id: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -23,11 +24,9 @@ const Dashboard: React.FC = () => {
     const storagedRepositories = localStorage.getItem(
       '@githubExplorer:repositories',
     );
-
     if (storagedRepositories) return JSON.parse(storagedRepositories);
     return [];
   });
-
   useEffect(() => {
     localStorage.setItem(
       '@githubExplorer:repositories',
@@ -48,6 +47,14 @@ const Dashboard: React.FC = () => {
     try {
       const response = await api.get<Repository>(`repos/${newRepo}`);
 
+      const verifyRepositoryExists = repositories.findIndex(
+        repository => repository.id === response.data.id,
+      );
+
+      if (verifyRepositoryExists !== -1) {
+        setInputError('repositorio ja adicionado');
+        return;
+      }
       const repository = response.data;
 
       setRepositories([...repositories, repository]);
