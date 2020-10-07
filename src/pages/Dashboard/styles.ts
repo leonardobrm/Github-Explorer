@@ -68,7 +68,7 @@ export const Error = styled.span`
 
 export const Repositories = styled.div`
   margin-top: 80px;
-  max-width: 700px;
+  max-width: 730px;
 
   a {
     background: #fff;
@@ -87,7 +87,7 @@ export const Repositories = styled.div`
     }
 
     &:hover {
-      transform: translateX(10px);
+      transform: translateX(3px);
       border: 1px solid #04d361;
     }
 
@@ -113,6 +113,28 @@ export const Repositories = styled.div`
     svg {
       margin-left: auto;
       color: #cbcbd6;
+    }
+  }
+`;
+
+export const Main = styled.div`
+  display: flex;
+  margin-bottom: 16px;
+`;
+
+export const DeleteButton = styled.div`
+  display: flex;
+  justify-items: center;
+  margin-left: 7px;
+  button {
+    background: #f0f0f5;
+    border: 0;
+    transition: background-color 1s;
+
+    svg {
+      &:hover {
+        color: red;
+      }
     }
   }
 `;

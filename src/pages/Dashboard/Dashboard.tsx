@@ -1,11 +1,11 @@
-/* eslint-disable camelcase */
 import React, { useState, useEffect, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
+import { AiFillDelete } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import logoImg from '../../assets/Logo.svg';
 
-import { Title, Form, Repositories, Error } from './styles';
+import { Title, Form, Repositories, Error, Main, DeleteButton } from './styles';
 
 interface Repository {
   full_name: string;
@@ -65,6 +65,14 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  async function handleDeleteRepository(id: number) {
+    const findRepository = repositories.filter(
+      repository => repository.id !== id,
+    );
+
+    setRepositories(findRepository);
+  }
   return (
     <>
       <img src={logoImg} alt="Github explorer" />
@@ -82,20 +90,27 @@ const Dashboard: React.FC = () => {
 
       <Repositories>
         {repositories.map(repository => (
-          <Link
-            key={repository.full_name}
-            to={`repositories/${repository.full_name}`}
-          >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
-            <FiChevronRight size={20} />
-          </Link>
+          <Main key={repository.id}>
+            <Link to={`repositories/${repository.full_name}`}>
+              <img
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login}
+              />
+              <div>
+                <strong>{repository.full_name}</strong>
+                <p>{repository.description}</p>
+              </div>
+              <FiChevronRight size={20} />
+            </Link>
+            <DeleteButton>
+              <button
+                onClick={() => handleDeleteRepository(repository.id)}
+                type="button"
+              >
+                <AiFillDelete size={20} />
+              </button>
+            </DeleteButton>
+          </Main>
         ))}
       </Repositories>
     </>
