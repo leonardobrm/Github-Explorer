@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
       );
 
       if (verifyRepositoryExists !== -1) {
-        setInputError('repositorio ja adicionado');
+        setInputError('repository already added');
         return;
       }
       const repository = response.data;
